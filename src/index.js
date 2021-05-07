@@ -1,37 +1,26 @@
-var obj = {};
-Object.defineProperty(obj, "a", {
-  enumerable: true,
-  get() {
-    console.log("正在访问obj的a属性");
-    return 11;
+import observe from "./observe";
+import Watcher from "./Watcher";
+var obj = {
+  a: {
+    m: {
+      n: 5,
+    },
   },
-  set() {
-    console.log("正在改变obj的a属性");
-  },
+  b: 4,
+  g: [11, 22, 33, 44],
+};
+
+observe(obj);
+
+// console.log(obj);
+
+// obj.g.splice(1, 0, [222, 333, 444]);
+// obj.b = 5555;
+// obj.g.push("aaaa");
+// console.log("obj.g", obj.g.push(333));
+
+new Watcher(obj, "a.m.n", (val) => {
+  console.log("五角星", val);
 });
-Object.defineProperty(obj, "b", {
-  enumerable: true,
-  get() {
-    console.log("正在访问obj的b属性");
-    return 22;
-  },
-  set() {
-    console.log("正在改变obj的b属性");
-  },
-});
-Object.defineProperty(obj, "c", {
-  enumerable: true,
-  get() {
-    console.log("正在访问obj的b属性");
-    return 33;
-  },
-  set() {
-    console.log("正在改变obj的c属性");
-  },
-});
-obj.a++;
-obj.b++;
-obj.c++;
-Object.keys(obj).forEach((key) => {
-  console.log(key, "->", obj[key]);
-});
+
+obj.a.m.n = 555;
